@@ -35,6 +35,7 @@ public class StatsBroadcaster {
         }
     }
 
+    //TODO: find a more convenient way to add multiple sink
     public void startBroadcastToSink(final StatsSink sink) {
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override

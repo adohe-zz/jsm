@@ -13,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author Tony He
  */
+//TODO: Remove StatsGetters from stats sink
 public abstract class StatsSink {
 
     private static final Logger logger = LoggerFactory.getLogger(StatsSink.class);
