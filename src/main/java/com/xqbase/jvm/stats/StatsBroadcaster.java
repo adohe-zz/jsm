@@ -1,14 +1,12 @@
 package com.xqbase.jvm.stats;
 
+import com.xqbase.jvm.stats.internal.stats.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * StatsBroadcaster knows how to gather stats and send them
@@ -23,40 +21,46 @@ public class StatsBroadcaster {
     private List<StatsSink> sinks = new ArrayList<StatsSink>();
     private ScheduledExecutorService executorService;
 
+    private List<StatsGetter> getters = new CopyOnWriteArrayList<StatsGetter>();
+
     public StatsBroadcaster() {
-        executorService = new ScheduledThreadPoolExecutor(5, new DaemonThreadFactory());
+        // Add builtin stats getters.
+        this.getters.add(new ClassStatsGetter());
+        this.getters.add(new GCStatsGetter());
+        this.getters.add(new MemoryStatsGetter());
+        this.getters.add(new OSStatsGetter());
+        this.getters.add(new ThreadStatsGetter());
+
+        executorService = new ScheduledThreadPoolExecutor(2, new DaemonThreadFactory());
     }
 
     // Add one StatSink to the broadcaster
     public void addStatsSink(StatsSink sink) {
         if (sink != null) {
             sinks.add(sink);
-            startBroadcastToSink(sink);
+            recordStatsToSink(sink);
         }
     }
 
-    //TODO: find a more convenient way to add multiple sink
-    public void startBroadcastToSink(final StatsSink sink) {
+    private void recordStatsToSink(final StatsSink sink) {
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                /*try {
-                    for (StatsGetter getter : sink.getGetters()) {
+                try {
+                    for (StatsGetter getter : StatsBroadcaster.this.getters) {
                         Stats s = getter.get();
-                        for (StatsHandler handler : sink.getHandlers()) {
-                            handler.process(s);
-                        }
+                        sink.process(s);
                     }
                 } catch (Throwable e) {
-                    logger.error("Encounter an error while reporting", e);
-                }*/
-                sink.run();
+                    logger.error("Encounter an error while reporting to sink: " + sink.getName(), e);
+                }
             }
-        }, sink.getInterval(), sink.getInterval(), TimeUnit.MILLISECONDS);
+        }, sink.getInterval(), sink.getInterval(), TimeUnit.SECONDS);
     }
 
-    public void close() {
+    public void shutdown() {
         for (StatsSink sink : sinks) {
+            logger.info("close sink: " + sink.getName());
             sink.shutdown();
         }
     }

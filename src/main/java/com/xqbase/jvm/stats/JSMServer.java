@@ -44,6 +44,7 @@ public class JSMServer {
             try {
                 this.server.start();
                 this.running = true;
+                this.statsBroadcaster.addStatsSink(new InternalStatsSink());
             } catch (Exception e) {
                 logger.error("Exception in starting");
             }
@@ -55,6 +56,7 @@ public class JSMServer {
             try {
                 this.server.stop();
                 this.running = true;
+                this.statsBroadcaster.shutdown();
             } catch (Exception e) {
                 logger.error("Exception in shutdown");
             }

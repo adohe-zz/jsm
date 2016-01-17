@@ -21,8 +21,10 @@ public abstract class AbstractStatsHandler implements StatsHandler {
             processGCStats((GCStats)stats);
         } else if (stats instanceof MemoryStats) {
             processMemoryStats((MemoryStats)stats);
-        } else {
+        } else if (stats instanceof ThreadStats) {
             processThreadStats((ThreadStats)stats);
+        } else {
+            processOSStats((OSStats)stats);
         }
     }
 
@@ -33,4 +35,6 @@ public abstract class AbstractStatsHandler implements StatsHandler {
     public abstract void processMemoryStats(MemoryStats memoryStats);
 
     public abstract void processThreadStats(ThreadStats threadStats);
+
+    public abstract void processOSStats(OSStats osStats);
 }
