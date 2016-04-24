@@ -1,5 +1,7 @@
 package com.xqbase.jvm.stats.internal.stats;
 
+import com.xqbase.jvm.stats.util.Bytes;
+
 /**
  * Operating Systems Stats.
  *
@@ -100,6 +102,12 @@ public class OSStats implements Stats {
 
     @Override
     public String toJsonStr() {
-        return null;
+        return "{\"committedVirtualMemory\":\"" + Bytes.bytesToSize(this.committedVirtualMemory) +
+            "\", \"totalSwapSpaceSize\":\"" + Bytes.bytesToSize(this.totalSwapSpaceSize) + "\", \"freeSwapSpaceSize\":\"" +
+            Bytes.bytesToSize(this.freeSwapSpaceSize) + "\", \"processCpuTimeNS\":\"" + this.processCpuTime + "\", \"freePhysicalMemorySize\":\"" +
+            Bytes.bytesToSize(this.freePhysicalMemorySize) + "\", \"totalPhysicalMemorySize\":\"" + Bytes.bytesToSize(this.totalPhysicalMemorySize) +
+            "\", \"systemCpuLoad\":\"" + String.format("%.4f", this.systemCpuLoad) + "\", \"processCpuLoad\":\"" + String.format("%.4f", this.processCpuLoad) +
+            "\", \"maxFileDescriptorCount \":\"" + this.maxFileDescriptorCount + "\", \"openFileDescriptorCount \":\"" + this.openFileDescriptorCount + "\"}";
+
     }
 }

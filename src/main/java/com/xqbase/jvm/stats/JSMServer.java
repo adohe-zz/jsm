@@ -63,7 +63,9 @@ public class JSMServer {
         }
     }
 
-    public void addStatsSink(StatsSink sink) {
-        this.statsBroadcaster.addStatsSink(sink);
+    public synchronized void addStatsSink(StatsSink sink) {
+        if (this.running) {
+            this.statsBroadcaster.addStatsSink(sink);
+        }
     }
 }

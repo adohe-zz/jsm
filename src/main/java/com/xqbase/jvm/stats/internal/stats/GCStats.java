@@ -64,6 +64,9 @@ public class GCStats implements Stats {
 
     @Override
     public String toJsonStr() {
-        return null;
+        return "{\"minorGcCount\":\"" + this.minorGcCount + "\", \"minorGcTimeMS\":\"" +
+                this.minorGcTime + "\", \"fullGcCount\":\"" + this.fullGcCount + "\", \"fullGcTimeMS\":\"" +
+                this.fullGcTime + "\", \"otherGcCount\":\"" + this.otherGcCount + "\", \"otherGcTime\":\"" +
+                this.otherGcTime + "\"}";
     }
 }

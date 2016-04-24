@@ -37,6 +37,7 @@ public class ClassStats implements Stats {
 
     @Override
     public String toJsonStr() {
-        return null;
+        return "{\"currentClassCount\":\"" + this.currentClassCount + "\", \"beenLoadedClassCount\":\"" +
+                this.beenLoadedClassCount + "\", \"beenUnloadedClassCount\":\"" + this.beenUnloadedClassCount + "\"}";
     }
 }

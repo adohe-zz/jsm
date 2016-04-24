@@ -37,6 +37,7 @@ public class ThreadStats implements Stats {
 
     @Override
     public String toJsonStr() {
-        return null;
+        return "{\"currentThreadCount\":\"" + this.currentThreadCount + "\", \"daemonThreadCount\":\"" +
+            this.daemonThreadCount + "\", \"beenCreatedThreadCount\":\"" + this.beenCreatedThreadCount + "\"}";
     }
 }

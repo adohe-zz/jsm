@@ -1,5 +1,7 @@
 package com.xqbase.jvm.stats.internal.stats;
 
+import com.xqbase.jvm.stats.util.Bytes;
+
 /**
  * Memory stats of jvm.
  *
@@ -64,6 +66,9 @@ public class MemoryStats implements Stats {
 
     @Override
     public String toJsonStr() {
-        return null;
+        return "{\"heapUsedMemory\":\"" + Bytes.bytesToSize(this.heapUsedMemory) + "\", \"heapCommitedMemory\":\"" +
+                Bytes.bytesToSize(this.heapCommittedMemory) + "\", \"heapMaxMemory\":\"" + Bytes.bytesToSize(this.heapMaxMemory) +
+                "\", \"nonHeapUsedMemory\":\"" + Bytes.bytesToSize(this.nonHeapUsedMemory) + "\", \"nonHeapCommitedMemory\":\"" +
+                Bytes.bytesToSize(this.nonHeapCommittedMemory) + "\", \"nonHeapMaxMemory\":\"" + Bytes.bytesToSize(this.nonHeapMaxMemory) + "\"}";
     }
 }

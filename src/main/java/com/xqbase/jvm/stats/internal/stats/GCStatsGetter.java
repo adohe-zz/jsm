@@ -46,7 +46,7 @@ public class GCStatsGetter implements StatsGetter {
         s.setFullGcCount(fullGcCount - this.previous.getFullGcCount());
         s.setFullGcTime(fullGcTime - this.previous.getFullGcTime());
         s.setOtherGcCount(otherGcCount - this.previous.getOtherGcCount());
-        s.setOtherGcCount(otherGcTime - this.previous.getOtherGcTime());
+        s.setOtherGcTime(otherGcTime - this.previous.getOtherGcTime());
 
         this.previous.setMinorGcCount(minorGcCount);
         this.previous.setMinorGcTime(minorGcTime);

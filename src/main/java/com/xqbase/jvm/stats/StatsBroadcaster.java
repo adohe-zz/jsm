@@ -18,10 +18,10 @@ public class StatsBroadcaster {
 
     private static final Logger logger = LoggerFactory.getLogger(StatsBroadcaster.class);
 
-    private List<StatsSink> sinks = new ArrayList<StatsSink>();
+    private List<StatsSink> sinks = new ArrayList<>();
     private ScheduledExecutorService executorService;
 
-    private List<StatsGetter> getters = new CopyOnWriteArrayList<StatsGetter>();
+    private List<StatsGetter> getters = new CopyOnWriteArrayList<>();
 
     public StatsBroadcaster() {
         // Add builtin stats getters.
