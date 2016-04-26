@@ -37,7 +37,7 @@ public class OSStatsGetter implements StatsGetter {
                 e.printStackTrace();
             }
             try {
-                Field f = statsClazz.getField(fieldName);
+                Field f = statsClazz.getDeclaredField(fieldName);
                 f.setAccessible(true);
                 fieldMap.putIfAbsent(fieldName, f);
             } catch (NoSuchFieldException e) {

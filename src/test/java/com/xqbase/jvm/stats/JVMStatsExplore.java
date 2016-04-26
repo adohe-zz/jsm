@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Simple example how to integrate jsm to your Java application
@@ -37,7 +38,7 @@ public class JVMStatsExplore {
 
     private static void initStatsServer() {
         JSMServer jsmServer = new JSMServer(8088);
-        jsmServer.addStatsSink(new PrintStatsSink("PrintStatsSink", 2000));
+        jsmServer.addStatsSink(new PrintStatsSink("PrintStatsSink", 5000));
         jsmServer.start();
     }
 
@@ -45,7 +46,10 @@ public class JVMStatsExplore {
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            super.doGet(req, resp);
+            resp.setContentType("text/plain");
+
+            PrintWriter out = resp.getWriter();
+            out.print("beep boop");
         }
     }
 

@@ -55,7 +55,7 @@ public class StatsBroadcaster {
                     logger.error("Encounter an error while reporting to sink: " + sink.getName(), e);
                 }
             }
-        }, sink.getInterval(), sink.getInterval(), TimeUnit.SECONDS);
+        }, sink.getInterval(), sink.getInterval(), TimeUnit.MILLISECONDS);
     }
 
     public void shutdown() {
